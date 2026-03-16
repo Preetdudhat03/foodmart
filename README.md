@@ -45,19 +45,133 @@ Copy the `FoodMart` folder and paste it into the `htdocs` directory of your XAMP
 - Open the **XAMPP Control Panel**.
 - Start the **Apache** and **MySQL** modules.
 
-### 5. Database Setup
-The project is designed to automatically create the database if it doesn't exist, but you can also set it up manually:
-- Open your browser and go to `http://localhost/phpmyadmin`.
-- (Optional) Create a new database named `food_mart`.
-- Manual Import: Import the provided `database.sql` file into your `food_mart` database.
+---
 
-### 6. Initialize Tables and Products
-Run the following setup scripts in your browser to populate the database with tables and sample data:
-1. `http://localhost/FoodMart/setup_products.php` (Creates products table and adds initial stock).
-2. `http://localhost/FoodMart/setup_orders.php` (Creates orders and order items tables).
+## 🗄️ Database Setup & Configuration
 
-### 7. Run the Project
-Access the application at:
+The project uses a MySQL database. Follow these details for a manual or automatic setup.
+
+### 1. Connection Settings
+The database connection is managed in `includes/db_connection.php`.
+- **Host**: `localhost`
+- **User**: `root`
+- **Password**: `""` (Empty by default in XAMPP)
+- **Database Name**: `food_mart`
+
+### 2. Manual Database Creation
+If you prefer setting it up manually via **phpMyAdmin**:
+1. Go to `http://localhost/phpmyadmin`.
+2. Create a database named `food_mart`.
+3. Import the `database.sql` file.
+
+### 3. Database Schema (SQL Queries)
+Here is the structure of the tables used in this project:
+
+#### 👥 Users Table
+```sql
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+#### 📦 Products Table
+```sql
+CREATE TABLE IF NOT EXISTS products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    image VARCHAR(255),
+    price VARCHAR(50),
+    quantity_label VARCHAR(50),
+    rating VARCHAR(10),
+    category VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+#### 🛒 Cart Table
+```sql
+CREATE TABLE IF NOT EXISTS cart (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    product_title VARCHAR(255) NOT NULL,
+    product_image VARCHAR(255),
+    product_price VARCHAR(50),
+    quantity INT DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+```
+
+#### ❤️ Favorites (Wishlist) Table
+```sql
+CREATE TABLE IF NOT EXISTS favorites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    product_title VARCHAR(255) NOT NULL,
+    product_image VARCHAR(255),
+    product_price VARCHAR(50),
+    product_rating VARCHAR(10),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+```
+
+#### 📋 Orders Table
+```sql
+CREATE TABLE IF NOT EXISTS orders (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(11) NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL,
+    order_status VARCHAR(50) DEFAULT 'Pending',
+    payment_method VARCHAR(50) NOT NULL,
+    shipping_address TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+```
+
+#### 🛍️ Order Items Table
+```sql
+CREATE TABLE IF NOT EXISTS order_items (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    order_id INT(11) NOT NULL,
+    product_id INT(11) DEFAULT 0,
+    product_name VARCHAR(255) NOT NULL,
+    quantity INT(11) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+);
+```
+
+#### 📩 Subscribers Table
+```sql
+CREATE TABLE IF NOT EXISTS subscribers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) DEFAULT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+---
+
+## 🛠️ Initialization via Setup Scripts
+
+After setting up the database, you **must** run the following initialization scripts in your browser to create the tables and populate sample products. This is essential for the store to function correctly.
+
+| Step | Script Path | Description |
+|------|-------------|-------------|
+| 1 | `http://localhost/FoodMart/setup_products.php` | Creates the `products` table and inserts sample items like fruits, vegetables, and dairy. |
+| 2 | `http://localhost/FoodMart/setup_orders.php` | Creates the `orders` and `order_items` tables to enable checkout functionality. |
+
+---
+
+## 🚀 Final Step: Run the Project
+Once the database and scripts are initialized, access the application at:
 👉 **[http://localhost/FoodMart/index.php](http://localhost/FoodMart/index.php)**
 
 ---
