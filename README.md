@@ -195,8 +195,7 @@ FoodMart/
 
 ## 📜 Credits & Attribution
 
-This template was originally provided by [TemplatesJungle](https://templatesjungle.com/).
-Modified and enhanced by [Your Name/Preet].
+Developed by **Preet Dudhat**.
 
 ---
 
