@@ -159,14 +159,32 @@ CREATE TABLE IF NOT EXISTS subscribers (
 
 ---
 
-## 🛠️ Initialization via Setup Scripts
+## 📧 Email Service Setup (PHPMailer)
 
-After setting up the database, you **must** run the following initialization scripts in your browser to create the tables and populate sample products. This is essential for the store to function correctly.
+The project uses **PHPMailer** to handle email notifications (e.g., for subscriptions or contact forms). To make it work, you need to configure your SMTP settings.
 
-| Step | Script Path | Description |
-|------|-------------|-------------|
-| 1 | `http://localhost/FoodMart/setup_products.php` | Creates the `products` table and inserts sample items like fruits, vegetables, and dairy. |
-| 2 | `http://localhost/FoodMart/setup_orders.php` | Creates the `orders` and `order_items` tables to enable checkout functionality. |
+### 1. Configuration File
+Open `includes/mailer.php`.
+
+### 2. Setup SMTP (Gmail Example)
+If you are using Gmail, follow these steps:
+1.  **Enable 2-Step Verification** on your Google Account.
+2.  **Generate an App Password**:
+    - Go to your Google Account settings -> Security.
+    - Search for "App Passwords".
+    - Select "Mail" and "Other (Custom name)" (e.g., FoodMart).
+    - Copy the generated **16-character password**.
+3.  **Update mailer.php**:
+    ```php
+    $mail->Host       = 'smtp.gmail.com';                     
+    $mail->Username   = 'your-email@gmail.com';  // Your Gmail address
+    $mail->Password   = 'your-app-password';     // The 16-character code
+    $mail->Port       = 587;   
+    $mail->setFrom('your-email@gmail.com', 'FoodMart');
+    ```
+
+### 3. Verification
+Once configured, features like the newsletter subscription in the footer will be able to send emails to users.
 
 ---
 
