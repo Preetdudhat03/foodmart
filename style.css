@@ -1171,3 +1171,69 @@ img {
     border-color: #444;
     color: #f1f1f1;
 }
+
+/* --- Modal & Form Floating Fixes for Dark Mode --- */
+
+[data-theme="dark"] .modal-content {
+    background-color: #1a1a1a;
+    color: #f1f1f1;
+    border: 1px solid #333;
+}
+
+[data-theme="dark"] .modal-header .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* Fix floating labels overlapping in dark mode */
+[data-theme="dark"] .form-floating > .form-control {
+    background-color: #2d2d2d;
+    color: #fff;
+}
+
+[data-theme="dark"] .form-floating > label {
+    color: #aaa;
+    background-color: transparent;
+}
+
+[data-theme="dark"] .form-floating > .form-control:focus ~ label,
+[data-theme="dark"] .form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: var(--accent-color);
+    background-color: #1a1a1a; /* Match modal background to cover overlap */
+    opacity: 1;
+    transform: scale(0.85) translateY(-0.75rem) translateX(0.15rem);
+    padding: 0 0.5rem;
+    height: auto;
+    border-radius: 4px;
+}
+
+/* Ensure padding doesn't cause overlap when not floated */
+[data-theme="dark"] .form-floating > .form-control::placeholder {
+    color: transparent;
+}
+
+/* Modal Nav Pills (Login/Register Tabs) */
+[data-theme="dark"] .modal-body .nav-pills .nav-link {
+    color: #aaa;
+    background-color: #333;
+    margin: 0 5px;
+}
+
+[data-theme="dark"] .modal-body .nav-pills .nav-link.active {
+    color: #000;
+    background-color: #fff;
+    font-weight: 600;
+}
+
+/* Modal Links */
+[data-theme="dark"] .modal-body a {
+    color: #888;
+}
+
+[data-theme="dark"] .modal-body a:hover {
+    color: var(--accent-color);
+}
+
+/* Fix text-muted in modals */
+[data-theme="dark"] .modal-body .text-muted {
+    color: #999 !important;
+}
