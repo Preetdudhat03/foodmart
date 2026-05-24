@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Animation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body{font-family:Arial; padding: 20px;}
+        #animatedBox { width: 150px; height: 150px; background-color: #3498db; margin-top: 20px; position: relative; }
+    </style>
+</head>
+<body>
+    <button id="moveBtn">Move & Fade Box</button>
+    <button id="resetBtn">Reset</button>
+    <div id="animatedBox"></div>
+    <script>
+        $(document).ready(function() {
+            $("#moveBtn").click(function() {
+                $("#animatedBox").animate({ left: '250px', opacity: '0.5', height: '200px', width: '200px' }, 500);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><style>body{font-family:Arial; padding: 20px;}</style></head>
+<body>
+    <div id="contentBox" style="padding: 20px; border: 1px solid black; width: 300px; transition: 0.3s;">
+        <h3 id="mainTitle">Original Title</h3>
+        <p id="descText">This is some standard description text.</p>
+    </div>
+    <br>
+    <button id="changeBtn" onclick="manipulateDOM()">Change Content</button>
+
+    <script>
+        function manipulateDOM() {
+            let title = document.getElementById('mainTitle');
+            let box = document.getElementById('contentBox');
+            let p = document.getElementById('descText');
+            
+            title.innerText = "Updated Title via DOM";
+            p.innerHTML = "<strong>The text has been styled and updated dynamically!</strong>";
+            
+            box.style.backgroundColor = "lightyellow";
+            box.style.borderRadius = "10px";
+            box.style.borderColor = "blue";
+        }
+    </script>
+</body>
+</html>

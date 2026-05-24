@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery AJAX Fetch</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>body{font-family:Arial; padding: 20px;} li {margin-bottom: 5px;}</style>
+</head>
+<body>
+    <h3>User List from API</h3>
+    <button id="fetchBtn">Load Users</button>
+    <p id="loading" style="display:none; color:blue;">Loading data...</p>
+    <ul id="userList"></ul>
+    <script>
+        $(document).ready(function() {
+            $("#fetchBtn").click(function() {
+                $("#loading").show();
+                $.ajax({
+                    url: "https://jsonplaceholder.typicode.com/users",
+                    type: "GET",
+                    success: function(data) {
+                        $("#loading").hide();
+                        let listItems = "";
+                        for (let i = 0; i < 5; i++) {
+                            listItems += "<li><strong>" + data[i].name + "</strong> (" + data[i].email + ")</li>";
+                        }
+                        $("#userList").html(listItems);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

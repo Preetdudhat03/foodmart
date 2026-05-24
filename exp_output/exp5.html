@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head><style>body{font-family:Arial; padding: 20px;}</style></head>
+<body>
+    <h3>User Registration Validation</h3>
+    <input type="text" id="username" placeholder="Username (Letters only)"><br><br>
+    <input type="text" id="age" placeholder="Age"><br><br>
+    <button id="valBtn" onclick="validateData()">Validate</button>
+    <p id="result"></p>
+
+    <script>
+        function validateData() {
+            let username = document.getElementById('username').value.trim();
+            let ageStr = document.getElementById('age').value;
+            let resultText = "";
+            
+            let nameRegex = /^[a-zA-Z]+$/;
+            if (!username.match(nameRegex)) {
+                resultText += "Error: Username must contain only letters.<br>";
+            } else if (username.length < 4) {
+                resultText += "Error: Username must be at least 4 chars long.<br>";
+            }
+            
+            let ageNum = parseInt(ageStr);
+            if (isNaN(ageNum)) {
+                resultText += "Error: Age must be a valid number.<br>";
+            } else if (ageNum < 18) {
+                resultText += "Error: You must be at least 18 years old.<br>";
+            }
+            
+            if (resultText === "") {
+                resultText = "<span style='color:green'>Validation Successful!</span>";
+            } else {
+                resultText = "<span style='color:red'>" + resultText + "</span>";
+            }
+            
+            document.getElementById('result').innerHTML = resultText;
+        }
+    </script>
+</body>
+</html>
